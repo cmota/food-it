@@ -79,3 +79,25 @@ class CompanyVegetables(Model):
     @staticmethod
     def get_all():
         return get_file_data(COMPANY_VEGETABLE_FILE)
+
+    def get_next_id(self, vegetables):
+        max_id = 0
+        for vegetable in vegetables:
+            if vegetable['id'] > max_id:
+                max_id = vegetable['id']
+        return max_id + 1
+
+    def save(self):
+
+        vegetables = self.get_all()
+
+        if self.id:
+            pass
+        else:
+            self.id = self.get_next_id(vegetables)
+            vegetables.append(self.to_json())
+
+        with open(COMPANY_VEGETABLE_FILE, 'w') as company_vegetables:
+            company_vegetables.write(json.dumps(vegetables))
+
+        return self

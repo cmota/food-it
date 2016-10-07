@@ -60,10 +60,16 @@ def all_vegetables():
     return build_response(vegetables)
 
 
-@app.route("/me", methods=['GET'])
+@app.route("/me", methods=['GET', 'POST'])
 def my_vegetables():
-    vegetables = CompanyVegetables.get_all()
-    return build_response(vegetables)
+    if request.method == 'GET':
+        vegetables = CompanyVegetables.get_all()
+        return build_response(vegetables)
+
+    request_data = get_request_data(request)
+    cv = CompanyVegetables(request_data)
+    cv = cv.save()
+    return build_response(cv.to_json())
 
 
 if __name__ == "__main__":
