@@ -1,7 +1,7 @@
 from flask import Flask, request
 
 
-from models import Recipe, Vegetables
+from models import Recipe, Vegetables, CompanyVegetables
 from helpers import build_response, get_request_data
 from third_party import get_recipes, get_recipe_detail
 
@@ -57,6 +57,12 @@ def recipes():
 @app.route("/vegetables", methods=['GET'])
 def all_vegetables():
     vegetables = Vegetables.get_all()
+    return build_response(vegetables)
+
+
+@app.route("/me", methods=['GET'])
+def my_vegetables():
+    vegetables = CompanyVegetables.get_all()
     return build_response(vegetables)
 
 

@@ -1,7 +1,7 @@
 import json
 
 from helpers import get_file_data
-from settings import HISTORY_FILE, VEGETABLES_FILE
+from settings import HISTORY_FILE, VEGETABLES_FILE, COMPANY_VEGETABLE_FILE
 
 
 class Model(object):
@@ -66,3 +66,16 @@ class Vegetables(Model):
     @staticmethod
     def get_all():
         return get_file_data(VEGETABLES_FILE)
+
+
+class CompanyVegetables(Model):
+
+    def __init__(self, json):
+        self.id = json.get('id')
+        self.vegetal_id = json.get('vegetal_id')
+        self.location = json.get('location')
+        self.status = json.get('status')
+
+    @staticmethod
+    def get_all():
+        return get_file_data(COMPANY_VEGETABLE_FILE)
