@@ -60,16 +60,32 @@ def all_vegetables():
     return build_response(vegetables)
 
 
-@app.route("/me", methods=['GET', 'POST', 'PATCH'])
+@app.route("/me", methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def my_vegetables():
     if request.method == 'GET':
         vegetables = CompanyVegetables.get_all()
         return build_response(vegetables)
 
     request_data = get_request_data(request)
-    cv = CompanyVegetables(request_data)
-    cv = cv.save()
-    return build_response(cv.to_json())
+
+    if request.method == 'POST':
+        cv = CompanyVegetables(request_data)
+        cv = cv.save()
+        return build_response(cv.to_json())
+
+    if request.method == 'PATCH':
+        for data_point in request_data:
+            cv = CompanyVegetables(request_data)
+            cv.save()
+
+    if request.method == 'DELETE':
+
+        for data_point in request_data:
+            veggetable = CompanyVegetables(data_point)
+            veggetable.delete()
+
+    vegetables = CompanyVegetables.get_all()
+    return build_response(vegetables)
 
 
 if __name__ == "__main__":

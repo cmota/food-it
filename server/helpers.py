@@ -21,3 +21,8 @@ def get_file_data(namefile):
     except (IOError, ValueError):
         data = {}
     return data
+
+
+def dump_to_file(namefile, data):
+    with open(namefile, 'w') as file:
+        file.write(json.dumps(data))

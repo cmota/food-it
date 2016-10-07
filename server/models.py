@@ -1,6 +1,4 @@
-import json
-
-from helpers import get_file_data
+from helpers import get_file_data, dump_to_file
 from settings import HISTORY_FILE, VEGETABLES_FILE, COMPANY_VEGETABLE_FILE
 
 
@@ -35,8 +33,7 @@ class Recipe(Model):
         ingredients = self.ingredients
         del self.ingredients
 
-        with open(HISTORY_FILE, 'w') as history_file:
-            history_file.write(json.dumps(history))
+        dump_to_file(HISTORY_FILE, history)
 
         # puting data as it was
         del self.index
@@ -99,7 +96,16 @@ class CompanyVegetables(Model):
             self.id = self.get_next_id(vegetables)
             vegetables.append(self.to_json())
 
-        with open(COMPANY_VEGETABLE_FILE, 'w') as company_vegetables:
-            company_vegetables.write(json.dumps(vegetables))
+        dump_to_file(COMPANY_VEGETABLE_FILE, vegetables)
 
-        return self
+    def delete(self):
+        vegetables = get_file_data(COMPANY_VEGETABLE_FILE)
+
+        self_index = -1
+        for i in xrange(len(vegetables)):
+            if vegetables[i]['id'] == self.id:
+                self_index = i
+                break
+        del vegetables[self_index]
+
+        dump_to_file(COMPANY_VEGETABLE_FILE, vegetables)
