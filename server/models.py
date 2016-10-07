@@ -29,10 +29,15 @@ class Recipe(object):
         history[self.id] = self.to_json()
 
         # removing ingredients, since its not used in the list
+
+        ingredients = self.ingredients
         del self.ingredients
 
         with open(HISTORY_FILE, 'w') as history_file:
             history_file.write(json.dumps(history))
+
+        del self.index
+        self.ingredients = ingredients
 
     @staticmethod
     def get_history():
