@@ -14,6 +14,18 @@ def hello():
     return build_response('Hello world')
 
 
+@app.route("/recipes/history", methods=['GET'])
+def recipe_history():
+    history = Recipe.get_history()
+    return build_response(history)
+
+
+@app.route("/recipes/<string:recipe_id>", methods=['GET'])
+def recipe(recipe_id):
+    recipe_detail = get_recipe_detail(recipe_id)
+    return build_response(recipe_detail)
+
+
 @app.route("/recipes/", methods=['POST'])
 def recipes():
     """
@@ -40,18 +52,6 @@ def recipes():
     recipe = get_recipes(request_data['ingredients'])
 
     return build_response(recipe)
-
-
-@app.route("/recipe/<string:recipe_id>", methods=['GET'])
-def recipe(recipe_id):
-    recipe_detail = get_recipe_detail(recipe_id)
-    return build_response(recipe_detail)
-
-
-@app.route("/recipe/history", methods=['GET'])
-def recipe_history():
-    history = Recipe.get_history()
-    return build_response(history)
 
 
 if __name__ == "__main__":
