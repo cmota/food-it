@@ -92,7 +92,9 @@ class CompanyVegetables(Model):
         vegetables = self.get_all()
 
         if self.id:
-            pass
+            for i in xrange(len(vegetables)):
+                if vegetables[i]['id'] == self.id:
+                    vegetables[i] = self.to_json()
         else:
             self.id = self.get_next_id(vegetables)
             vegetables.append(self.to_json())

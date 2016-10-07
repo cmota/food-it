@@ -60,7 +60,7 @@ def all_vegetables():
     return build_response(vegetables)
 
 
-@app.route("/me", methods=['GET', 'POST'])
+@app.route("/me", methods=['GET', 'POST', 'PATCH'])
 def my_vegetables():
     if request.method == 'GET':
         vegetables = CompanyVegetables.get_all()
