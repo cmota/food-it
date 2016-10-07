@@ -1,3 +1,4 @@
 *.pyc
 settings.py
 history.json
+vegetables.json
