@@ -9,6 +9,14 @@ from third_party import get_recipes, get_recipe_detail
 app = Flask(__name__)
 
 
+@app.after_request
+def apply_caching(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,HEAD,PUT,PATCH,POST,DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+    return response
+
+
 @app.route("/")
 def hello():
     return build_response('Hello world')
