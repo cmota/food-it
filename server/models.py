@@ -1,10 +1,16 @@
 import json
 
-from helpers import get_raw_history
-from settings import HISTORY_FILE
+from helpers import get_file_data
+from settings import HISTORY_FILE, VEGETABLES_FILE
 
 
-class Recipe(object):
+class Model(object):
+
+    def to_json(self):
+        return self.__dict__
+
+
+class Recipe(Model):
 
     def __init__(self, json):
 
@@ -19,30 +25,27 @@ class Recipe(object):
             # this means its asking for details so lets store it for later
             self.save_to_history()
 
-    def to_json(self):
-        return self.__dict__
-
     def save_to_history(self):
 
-        history = get_raw_history()
+        history = get_file_data(HISTORY_FILE)
         self.index = len(history)
         history[self.id] = self.to_json()
 
         # removing ingredients, since its not used in the list
-
         ingredients = self.ingredients
         del self.ingredients
 
         with open(HISTORY_FILE, 'w') as history_file:
             history_file.write(json.dumps(history))
 
+        # puting data as it was
         del self.index
         self.ingredients = ingredients
 
     @staticmethod
     def get_history():
 
-        history = get_raw_history()
+        history = get_file_data(HISTORY_FILE)
         recipe_history = [value for key, value in history.items()]
 
         recipe_history.sort(key=lambda x: x['index'], reverse=True)
@@ -52,3 +55,14 @@ class Recipe(object):
             recipe.pop('index')
 
         return recipe_history
+
+
+class Vegetables(Model):
+
+    def __init__(self, json):
+        self.id = json.get('id')
+        self.name = json.get('name')
+
+    @staticmethod
+    def get_all():
+        return get_file_data(VEGETABLES_FILE)
