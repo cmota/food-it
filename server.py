@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-from third_party import get_recipes
+from third_party import get_recipes, get_recipe_detail
 from helpers import build_response, get_request_data
 
 
@@ -40,9 +40,9 @@ def recipes():
     return build_response(recipe)
 
 
-@app.route("/recipe/", methods=['POST'])
-def recipe():
-    pass
+@app.route("/recipe/<string:recipe_id>", methods=['GET'])
+def recipe(recipe_id):
+    return build_response(get_recipe_detail(recipe_id))
 
 
 if __name__ == "__main__":

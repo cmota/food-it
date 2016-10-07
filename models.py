@@ -2,6 +2,7 @@
 class Recipe(object):
 
     def __init__(self, json):
+
         self.id = json.get('recipe_id')
         self.name = json.get('title')
         self.photo = json.get('image_url')
