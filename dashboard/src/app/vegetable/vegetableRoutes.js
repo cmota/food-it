@@ -23,15 +23,15 @@
 				url:'',
 				views:{
 					"":{
-						template	: '{{vm.myVegetables}}',
-						controller	:'vegetable.ListController',
-						controllerAs:'vm',
+						templateUrl	: 'app/vegetable/list/vegetable.list.html',
+						controller	: 'vegetable.ListController',
+						controllerAs: 'vm',
 					}
 				},
 
 				resolve:{
 					myVegetables:["VegetableService","vegetables",
-								(VegetableService,vegetables) =>
+								(  VegetableService , vegetables ) =>
 									VegetableService.getMine()
 										.then(myVegetables=>
 											myVegetables.map(veg =>{

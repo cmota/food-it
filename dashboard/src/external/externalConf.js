@@ -7,7 +7,18 @@
                     return {
                         'request'       : config    => config,
                         'requestError'  : rejection => $q.reject(rejection),
-                        'response'      : response  => response.status===200 && (response.data && response.data.response) || $q.reject(response) ,
+                        'response'      : response  => {
+                            if(response.status===200){
+                                if(response.config.headers.Accept.indexOf("application/json")>-1){
+                                    return response.data && response.data.response;
+                                }else{
+                                    return response;
+                                }
+
+                            }else{
+                                return $q.reject(response);
+                            }
+                        },
                         'responseError' : rejection => $q.reject(rejection)
                     };
                 });
