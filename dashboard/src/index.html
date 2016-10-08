@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js" ng-app="app">
   <head>
-    <base href="/">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -15,7 +14,9 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
 
-    <!-- include: "type": "css","ordering":"top-down", "files": ["assets/**/*.css" ] -->
+    <!-- include: "type": "css","ordering":"top-down", "files": ["**/*.css","!**/bower_components/**/*" ] -->
+    <link href="app/vegetable/add/vegetable.add.css" rel="stylesheet" type="text/css">
+    <link href="app/vegetable/list/vegetable.list.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- /include -->
     <script src="https://use.fontawesome.com/e0e48134b8.js"></script>
@@ -55,6 +56,7 @@
     <script src="app/appRun.js"></script>
     <script src="app/vegetable/vegetable.js"></script>
     <script src="app/vegetable/vegetableRoutes.js"></script>
+    <script src="app/vegetable/add/vegetable.AddController.js"></script>
     <script src="app/vegetable/list/vegetable.ListController.js"></script>
     <script src="core/core.js"></script>
     <script src="core/coreConf.js"></script>

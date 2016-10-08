@@ -3,12 +3,11 @@
 
 	angular.module('vegetable')
 		.config(function($stateProvider) {
-			let parent = 'vegetable';
+			let parent = 'main.vegetable';
 
 			$stateProvider.state({
 				abstract:true,
-				parent: 'main',
-				name: 'vegetable',
+				name: 'main.vegetable',
 				url: '',
 				template: '<ui-view></ui-view>',
 				resolve:{
@@ -17,18 +16,11 @@
 					]
 				}
 			}).state({
-				parent,
-				name: 'list',
-
+				name: `${parent}.list`,
 				url:'',
-				views:{
-					"":{
-						templateUrl	: 'app/vegetable/list/vegetable.list.html',
-						controller	: 'vegetable.ListController',
-						controllerAs: 'vm',
-					}
-				},
-
+				templateUrl	: 'app/vegetable/list/vegetable.list.html',
+				controller	: 'vegetable.ListController',
+				controllerAs: 'vm',
 				resolve:{
 					myVegetables:["VegetableService","vegetables",
 								(  VegetableService , vegetables ) =>
