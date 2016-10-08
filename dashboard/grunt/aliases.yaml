@@ -1,0 +1,28 @@
+dev:
+  - 'includeSource:dev'
+  - 'wiredep:dev'
+
+dist:
+  - 'clean:build'
+  - 'mkdir'
+  - 'wiredep:dist'
+  - 'cssmin'
+  - 'copy:vendor'
+  - 'copy:build'
+  - 'concat'
+  - 'babel'
+  - 'ngAnnotate'
+  - 'uglify'
+  - 'filerev'
+  - 'clean:tempFiles'
+  - 'copy:dist'
+  - 'includeSource:dist'
+  - 'replace'
+
+local:
+  - 'dev'
+  - 'connect'
+  - 'watch'
+
+default:
+  - 'dev'
