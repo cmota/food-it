@@ -18,7 +18,7 @@ class Recipe(Model):
         self.score = json.get('social_rank')
 
         if 'ingredients' in json:
-            self.ingredients = "str(', '.join(json.get('ingredients')))"
+            self.ingredients = [str(ingredient) for ingredient in json.get('ingredients')]
             # this means its asking for details so lets store it for later
             self.save_to_history()
 
