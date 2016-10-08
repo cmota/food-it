@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from helpers import get_file_data, dump_to_file
 from settings import HISTORY_FILE, VEGETABLES_FILE, COMPANY_VEGETABLE_FILE
 
