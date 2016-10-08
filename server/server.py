@@ -9,6 +9,23 @@ from third_party import get_recipes, get_recipe_detail
 app = Flask(__name__)
 
 
+@app.after_request
+def apply_caching(response):
+    response.headers.set(
+        'Access-Control-Allow-Origin',
+        '*'
+    )
+    response.headers.set(
+        'Access-Control-Allow-Methods',
+        'GET,HEAD,PUT,PATCH,POST,DELETE'
+    )
+    response.headers.set(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
+    return response
+
+
 @app.route("/")
 def hello():
     return build_response('Hello world')
@@ -28,19 +45,6 @@ def recipe(recipe_id):
 
 @app.route("/recipes/", methods=['POST'])
 def recipes():
-    """
-    Receives the data from the smartphone and calcs the best 10 recipe with those ingredients
-
-    Ex:
-    {
-        'ingredients': [
-            'lettuce',
-            'rice',
-            'cabbage',
-        ]
-    }
-    """
-
     request_data = get_request_data(request)
 
     if not request_data.get('ingredients'):
